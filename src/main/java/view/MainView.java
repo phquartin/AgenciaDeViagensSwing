@@ -1,5 +1,7 @@
 package view;
 
+import view.cliente.ClienteView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,7 +38,7 @@ public class MainView extends JFrame {
     }
 
     private void abrirClientes(ActionEvent e) {
-        // abrir tela clientes
+        new ClienteView().setVisible(true);
     }
 
     private void abrirPacotes(ActionEvent e) {
