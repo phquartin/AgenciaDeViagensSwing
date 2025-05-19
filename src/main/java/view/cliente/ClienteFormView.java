@@ -1,5 +1,9 @@
 package view.cliente;
 
+import service.cliente.ClienteService;
+import model.cliente.ClienteModel;
+import model.cliente.TipoCliente;
+
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
@@ -130,8 +134,36 @@ public class ClienteFormView extends JFrame {
     }
 
     private void salvar(ActionEvent e) {
-        // lógica de validação e envio dos dados
-        JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!");
+        ClienteService clienteService = new ClienteService();
+
+        try {
+            String nome = nomeField.getText();
+            String email = emailField.getText();
+            String telefone = telefoneField.getText();
+            String documento = documentoField.getText();
+            String tipo = (String) tipoCombo.getSelectedItem();
+
+            if (nome.isEmpty() || email.isEmpty() || telefone.isEmpty() || documento.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            ClienteModel cliente = new ClienteModel(
+                    0,
+                    nome,
+                    documento,
+                    email,
+                    telefone,
+                    TipoCliente.valueOf(tipo)
+            );
+
+            clienteService.cadastrarCliente(cliente);
+
+            JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!");
+            dispose(); // Fecha o formulário após salvar
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar cliente: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
 
