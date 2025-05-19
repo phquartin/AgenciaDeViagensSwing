@@ -2,12 +2,14 @@ package service.cliente;
 
 import dao.cliente.ClienteDao;
 import model.cliente.ClienteModel;
+import validation.cliente.ClienteValidation;
 
 import java.util.List;
 
 public class ClienteService {
 
     public void cadastrarCliente(ClienteModel cliente) {
+        ClienteValidation.validar(cliente);
         ClienteDao.cadastrarCliente(cliente);
     }
 
