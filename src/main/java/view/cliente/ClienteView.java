@@ -1,5 +1,6 @@
 package view.cliente;
 
+import service.cliente.ClienteService;
 import view.MainView;
 
 import javax.swing.*;
@@ -55,8 +56,18 @@ public class ClienteView extends JFrame {
 
     private void carregarClientes() {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
-        // model.addRow(new Object[]{1, "João da Silva", "NACIONAL", "123.456.789-00", "joao@email.com", "+55 61 99999-0000", "Ações"});
-        // model.addRow(new Object[]{2, "Maria Lopez", "ESTRANGEIRO", "XY123456", "maria@exemplo.com", "+34 91234-5678", "Ações"});
+        ClienteService clienteService = new ClienteService();
+        clienteService.listarClientes().forEach(cliente ->
+                model.addRow(new Object[]{
+                        cliente.getId(),
+                        cliente.getNome(),
+                        cliente.getTipo(),
+                        cliente.getDocumento(),
+                        cliente.getEmail(),
+                        cliente.getTelefone(),
+                        "Ações"
+                })
+        );
     }
 }
 
