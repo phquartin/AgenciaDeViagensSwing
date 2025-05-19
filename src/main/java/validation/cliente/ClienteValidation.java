@@ -22,7 +22,7 @@ public class ClienteValidation {
         }
         // TELEFONE ----------------------------
         if (!isValidPhoneNumber(cliente.getTelefone())) {
-            throw new ClienteException("Telefone inválido! O formato deve seguir o padrão internacional.");
+            throw new ClienteException("Telefone inválido! O formato deve seguir o padrão internacional. Exemplo: +55 11 123456789");
         }
         // NOME ---------------------------------
         if (cliente.getNome() == null || cliente.getNome().isBlank()) throw new ClienteException("Nome nulo ou vazio");
