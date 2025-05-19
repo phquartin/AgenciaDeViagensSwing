@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ClienteDao {
 
     public static void cadastrarCliente(ClienteModel cliente) {
-        String SQL = "INSERT INTO cliente (nome, documento, telefone, email, tipo_cliente) VALUES (?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO clientes (nome, documento, telefone, email, tipo_cliente) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = Conexao.conectar();
         PreparedStatement stmt = conn.prepareStatement(SQL)
         ){
@@ -33,14 +33,14 @@ public class ClienteDao {
 
     public static List<ClienteModel> listarClientes() {
         List<ClienteModel> clientes = new ArrayList<>();
-        String SQL = "SELECT * FROM cliente";
+        String SQL = "SELECT * FROM clientes";
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(SQL);
              var rs = stmt.executeQuery()) {
     
             while (rs.next()) {
                 clientes.add(new ClienteModel(
-                        rs.getLong("id"),
+                        rs.getLong("id_cliente"),
                         rs.getString("nome"),
                         rs.getString("documento"),
                         rs.getString("email"),
@@ -57,7 +57,7 @@ public class ClienteDao {
     }
 
     public static Optional<ClienteModel> buscarClientePorId(long id) {
-        String SQL = "SELECT * FROM cliente WHERE id = ?";
+        String SQL = "SELECT * FROM clientes WHERE id_cliente = ?";
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(SQL)) {
 
@@ -65,7 +65,7 @@ public class ClienteDao {
             try (var rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     ClienteModel cliente = new ClienteModel(
-                            rs.getLong("id"),
+                            rs.getLong("id_cliente"),
                             rs.getString("nome"),
                             rs.getString("documento"),
                             rs.getString("email"),
@@ -82,7 +82,7 @@ public class ClienteDao {
     }
 
     public static Optional<ClienteModel> buscarClientePorDocumento(String documento) {
-        String SQL = "SELECT * FROM cliente WHERE documento = ?";
+        String SQL = "SELECT * FROM clientes WHERE documento = ?";
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(SQL)) {
 
@@ -90,7 +90,7 @@ public class ClienteDao {
             try (var rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     ClienteModel cliente = new ClienteModel(
-                            rs.getLong("id"),
+                            rs.getLong("id_cliente"),
                             rs.getString("nome"),
                             rs.getString("documento"),
                             rs.getString("email"),
@@ -107,7 +107,7 @@ public class ClienteDao {
     }
 
     public static void excluirCliente(long id) {
-        String SQL = "DELETE FROM cliente WHERE id = ?";
+        String SQL = "DELETE FROM clientes WHERE id_cliente = ?";
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(SQL)) {
 
